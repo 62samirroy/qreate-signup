@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Praxis Sign Up</title>
+    <style>
+        :root {
+            --primary: #00ae00;
+            /* Modern teal */
+            --secondary: #ff7b6b;
+            /* Coral accent */
+            --light-bg: #f8fbfc;
+            --dark-text: #2d3748;
+            --light-text: #4a5568;
+            --disabled: #cccccc;
+            --input-border: #e2e8f0;
+            --input-focus: #00ae00;
+            --input-bg: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background: var(--light-bg);
+            color: var(--dark-text);
+        }
+
+        .container {
+            display: flex;
+            overflow-y: scroll;
+            width: 100%;
+        }
+
+        .main-div {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(0, 136, 169, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .slider {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary) 0%, #00b4d8 100%);
+        }
+
+        .slider-container {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+        }
+
+        .slide-text {
+            margin-top: 2px;
+            font-weight: 500;
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 80%;
+        }
+
+        .slide-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .card {
+            flex: 1;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            align-items: center;
+        }
+
+        .logo-container {
+            text-align: center;
+            height: fit-content;
+        }
+
+        .logo-container {
+            text-align: center;
+            animation: fadeIn 0.6s ease-out forwards;
+            animation-delay: 0s;
+        }
+
+        .logo {
+            height: 150px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+        }
+
+        .card h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin: 5px 0 10px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .desc {
+            color: var(--light-text);
+            margin-bottom: 40px;
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .card button {
+            padding: 16px 28px;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: fit-content;
+            box-shadow: 0 4px 15px rgba(0, 136, 169, 0.3);
+        }
+
+        .card button:active {
+            transform: translateY(0);
+        }
+
+        .card button:disabled {
+            background: var(--disabled);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        .footer-link {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .features {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            color: var(--light-text);
+        }
+
+        .feature svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            fill: var(--secondary);
+        }
+
+        /* New styles for account type selection */
+        .account-type-container {
+            display: none;
+            animation: fadeIn 0.6s ease-out forwards;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .account-type-options {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .account-type {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .account-type:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 136, 169, 0.1);
+        }
+
+        .account-type.selected {
+            border-color: var(--primary);
+            background-color: rgba(13, 236, 207, 0.1);
+        }
+
+        .account-type h3 {
+            margin-top: 0;
+            color: var(--dark-text);
+        }
+
+        .account-type p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        /* Form styles */
+        .signup-form {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-text);
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            width: 18px;
+            height: 18px;
+            color: var(--light-text);
+            z-index: 2;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background-color: var(--input-bg);
+            height: 48px;
+            box-sizing: border-box;
+        }
+
+        .form-group input::placeholder {
+            color: #a0aec0;
+            font-weight: 400;
+        }
+
+        .form-group input:focus {
+            border-color: var(--input-focus);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 174, 0, 0.1);
+        }
+
+        .form-group input.invalid {
+            border-color: var(--secondary);
+        }
+
+        .input-hint {
+            font-size: 0.75rem;
+            color: var(--light-text);
+            margin-top: 6px;
+            display: block;
+            font-style: italic;
+        }
+
+        .error-message {
+            color: var(--secondary);
+            font-size: 0.75rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-button svg {
+            margin-right: 5px;
+        }
+
+        /* New styles for side-by-side fields */
+        .form-row {
+            display: flex;
+            width: 100%;
+            gap: 7px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .primary-button {
+            width: 100%;
+            height: fit-content;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 8px;
+        }
+
+        .required {
+            color: var(--secondary);
+            margin-left: 4px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--light-text);
+            transition: color 0.2s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--secondary);
+        }
+
+        .terms-content {
+            line-height: 1.6;
+            color: var(--light-text);
+        }
+
+        .terms-content h3 {
+            color: var(--dark-text);
+            margin-top: 20px;
+        }
+
+        .terms-content p {
+            margin-bottom: 15px;
+        }
+
+        .terms-content ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Add to your existing CSS */
+        .input-wrapper {
+            position: relative;
+        }
+
+        /* Replace the existing password-toggle styles with these */
+        .password-toggle-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-text);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .password-toggle-icon:hover {
+            color: var(--primary);
+        }
+
+        /* Keep this to ensure proper spacing */
+        .input-wrapper input[type="password"],
+        .input-wrapper input[type="text"] {
+            padding-right: 40px;
+        }
+
+        .error-message {
+            color: var(--secondary);
+            font-size: 0.75rem;
+            margin-top: 4px;
+            display: none;
+            width: 100%;
+            text-align: left;
+            padding-left: 20px;
+            /* Match input field padding */
+        }
+
+        /* For fields without icons (like middle/last name) */
+        .no-icon-error .error-message {
+            padding-left: 12px;
+        }
+
+        .invalid {
+            border-color: var(--secondary) !important;
+        }
+
+        .invalid:focus {
+            box-shadow: 0 0 0 3px rgba(255, 123, 107, 0.2) !important;
+        }
+
+        /* Add to your existing CSS */
+        #login-form {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        #login-form .form-group {
+            margin-bottom: 25px;
+        }
+
+        #remember-me {
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .main-div {
+                flex-direction: column;
+                margin: 10px;
+            }
+
+            .slider {
+                height: 300px;
+            }
+
+            .card {
+                padding: 40px 30px;
+            }
+
+            .card h2 {
+                font-size: 1.8rem;
+            }
+
+            .account-type-options {
+                flex-direction: column;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card>* {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .card h2 {
+            animation-delay: 0.1s;
+        }
+
+        .desc {
+            animation-delay: 0.2s;
+        }
+
+        button {
+            animation-delay: 0.3s;
+        }
+
+        .features {
+            animation-delay: 0.4s;
+        }
+
+        /* For mobile responsiveness */
+        @media (max-width: 768px) {
+            .card-footer {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .footer-left,
+            .footer-right {
+                width: 100%;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="main-div">
+            <!-- Image Slider Section -->
+            <div class="slider">
+                <div class="slider-container">
+                    <!-- Slide 1 -->
+                    <div class="slide active">
+                        <img src="image/signup-1.jpg" alt="QR Code Designs">
+                        <div class="slide-text">Create beautiful, customizable QR codes in seconds</div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="slide">
+                        <img src="image/qrcode-2.jpg" alt="Analytics Dashboard">
+                        <div class="slide-text">Track scans and engagement with our analytics dashboard</div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="slide">
+                        <img src="image/qrcode-3.jpg" alt="Dynamic QR Codes">
+                        <div class="slide-text">Edit content anytime without changing your QR code</div>
+                    </div>
+
+                    <div class="slide-indicators">
+                        <div class="indicator active" data-slide="0"></div>
+                        <div class="indicator" data-slide="1"></div>
+                        <div class="indicator" data-slide="2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sign-up card -->
+            <div class="card">
+                <div class="logo-container">
+                    <img src="image/logo.png" alt="QR Praxis Logo" class="logo">
+                </div>
+
+                <!-- Initial content -->
+                <div id="initial-content">
+                    <h2>Get Started with QRaxis</h2>
+                    <p class="desc">
+                        Join thousands of professionals creating beautiful, functional QR codes
+                        for their businesses and personal brands.
+                    </p>
+                    <div style="display: flex; justify-content: center;">
+                        <button onclick="showAccountTypeSelection()">Create Account</button>
+                    </div>
+                </div>
+
+                <!-- Account type selection -->
+                <div id="account-type-container" class="account-type-container">
+                    <h2>Choose Account Type</h2>
+                    <p class="desc">Select the type of account that best fits your needs</p>
+
+                    <div class="account-type-options">
+                        <div class="account-type" onclick="selectAccountType('personal')">
+                            <h3>Personal</h3>
+                            <p>For individual users and personal projects</p>
+                        </div>
+                        <div class="account-type" onclick="selectAccountType('business')">
+                            <h3>Business</h3>
+                            <p>For companies and organizations</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Signup Form -->
+                <form id="personal-form" class="signup-form">
+                    <h2>Personal Information</h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="personal-first-name">First Name <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="currentColor">
+                                    <path
+                                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                </svg>
+                                <input type="text" id="personal-first-name" required
+                                    placeholder="Enter your first name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="personal-middle-name">Middle Name</label>
+                            <div class="input-wrapper">
+                                <input type="text" style="padding: 4px" id="personal-middle-name"
+                                    placeholder="Enter your middle name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="personal-last-name">Last Name <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="text" style="padding: 4px" id="personal-last-name" required
+                                    placeholder="Enter your last name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="personal-email">Email Address <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="currentColor">
+                                    <path
+                                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                                </svg>
+                                <input type="email" id="personal-email" required placeholder="Enter your email address">
+                            </div>
+                            <div id="personal-email-error" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="personal-phone">Mobile Number <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="currentColor">
+                                    <path
+                                        d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
+                                </svg>
+                                <input type="tel" id="personal-phone" required placeholder="Enter your mobile number">
+                            </div>
+                            <div id="personal-phone-error" class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personal-password">Password <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                            </svg>
+                            <input type="password" id="personal-password" required placeholder="Create a password"
+                                minlength="8">
+                            <i class='bx bx-hide password-toggle-icon'
+                                onclick="togglePassword('personal-password', this)"></i>
+                        </div>
+                        <div id="personal-password-error" class="error-message"></div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between;">
+                        <button type="button" class="back-button" onclick="backToAccountType()">
+                            <i class='bx bx-chevron-left'></i> Back </button>
+
+                        <button type="submit" class="primary-button" id="personal-submit" disabled>Continue</button>
+                    </div>
+                </form>
+
+                <!-- Business Signup Form -->
+                <form id="business-form" class="signup-form">
+                    <h2>Business Information</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="business-first-name">First Name <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="currentColor">
+                                    <path
+                                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                </svg>
+                                <input type="text" id="business-first-name" required
+                                    placeholder="Enter your first name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business-middle-name">Middle Name</label>
+                            <input type="text" style="padding: 4px" id="business-middle-name"
+                                placeholder="Enter your middle name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business-last-name">Last Name <span class="required">*</span></label>
+                            <input type="text" style="padding: 4px" id="business-last-name" required
+                                placeholder="Enter your last name">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="business-email">Email Address <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="currentColor">
+                                    <path
+                                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                                </svg>
+                                <input type="email" id="business-email" required
+                                    placeholder="Enter your business email">
+                            </div>
+                            <div id="business-email-error" class="error-message"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business-phone">Mobile Number <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="currentColor">
+                                    <path
+                                        d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
+                                </svg>
+                                <input type="tel" id="business-phone" required placeholder="Enter your mobile number">
+                            </div>
+                            <div id="business-phone-error" class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="business-name">Business Name <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="currentColor">
+                                    <path
+                                        d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
+                                </svg>
+                                <input type="text" id="business-name" required placeholder="Enter your business name"
+                                    minlength="5" maxlength="50">
+                            </div>
+                            <div class="error-message" id="business-name-error">Business name must be between 5 and 50
+                                characters</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business-password">Password <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="currentColor">
+                                    <path
+                                        d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                                </svg>
+                                <input type="password" id="business-password" required placeholder="Create a password"
+                                    minlength="8">
+                                <i class='bx bx-hide password-toggle-icon'
+                                    onclick="togglePassword('business-password', this)"></i>
+                            </div>
+                            <div class="error-message" id="business-password-error"></div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between;">
+                        <button type="button" class="back-button" onclick="backToAccountType()">
+                            <i class='bx bx-chevron-left'></i> Back
+                        </button>
+
+                        <button type="submit" class="primary-button" id="business-submit" disabled>Continue</button>
+                    </div>
+                </form>
+
+                <!-- Login Form -->
+                <form id="login-form" class="signup-form" style="display: none;">
+                    <h2>Login to Your Account</h2>
+
+                    <div class="form-group">
+                        <label for="login-email">Email Address <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                            </svg>
+                            <input type="email" id="login-email" required placeholder="Enter your email address">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                            </svg>
+                            <input type="password" id="login-password" required placeholder="Enter your password">
+                            <i class='bx bx-hide password-toggle-icon'
+                                onclick="togglePassword('login-password', this)"></i>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me" style="margin-left: 5px;">Remember me</label>
+                        </div>
+                        <a href="/forgot-password" style="font-size: 0.9rem; color: var(--primary);">Forgot
+                            password?</a>
+                    </div>
+
+                    <button type="submit" class="primary-button" style="width: 100%; margin-top: 20px; ">Login</button>
+                </form>
+
+                <!-- Add this footer section below the button -->
+                <div class="card-footer">
+                    <div class="footer-left" style="display: flex; align-items: center;">
+                        <p>Already have an account?</p>
+                        <a href="#" class="footer-link" style="color: var(--primary); margin-left: 5px;"
+                            onclick="showLogin()">Login</a>
+                    </div>
+                    <div class="footer-right">
+                        <a href="#" class="footer-link" id="terms-link">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Modal -->
+    <div class="modal" id="terms-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Terms and Conditions</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="terms-content">
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing or using the QRaxis platform, you agree to be bound by these Terms and Conditions. If
+                    you do not agree with any part of these terms, you must not use our services.</p>
+
+                <h3>2. Description of Service</h3>
+                <p>QRaxis provides QR code generation and management services, including but not limited to:</p>
+                <ul>
+                    <li>Creation of customizable QR codes</li>
+                    <li>Dynamic QR code functionality</li>
+                    <li>Analytics and tracking services</li>
+                    <li>API access for developers</li>
+                </ul>
+
+                <h3>3. User Responsibilities</h3>
+                <p>As a user of QRaxis, you agree to:</p>
+                <ul>
+                    <li>Provide accurate and complete registration information</li>
+                    <li>Maintain the confidentiality of your account credentials</li>
+                    <li>Not use the service for any illegal or unauthorized purpose</li>
+                    <li>Comply with all applicable laws and regulations</li>
+                </ul>
+
+                <h3>4. Prohibited Content</h3>
+                <p>You may not use QRaxis to create QR codes that link to:</p>
+                <ul>
+                    <li>Illegal content or activities</li>
+                    <li>Malware or phishing sites</li>
+                    <li>Adult or explicit content without proper age verification</li>
+                    <li>Content that infringes on intellectual property rights</li>
+                    <li>Content that promotes hate speech or discrimination</li>
+                </ul>
+
+                <h3>5. Privacy Policy</h3>
+                <p>Your use of QRaxis is also governed by our Privacy Policy, which explains how we collect, use, and
+                    protect your personal information.</p>
+
+                <h3>6. Limitation of Liability</h3>
+                <p>QRaxis shall not be liable for any indirect, incidental, special, consequential or punitive damages
+                    resulting from your use of or inability to use the service.</p>
+
+                <h3>7. Changes to Terms</h3>
+                <p>We reserve the right to modify these terms at any time. Continued use of the service after such
+                    changes constitutes your acceptance of the new terms.</p>
+
+                <h3>8. Termination</h3>
+                <p>We may terminate or suspend your account immediately, without prior notice or liability, for any
+                    reason whatsoever, including without limitation if you breach these Terms.</p>
+
+                <h3>9. Governing Law</h3>
+                <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction where
+                    QRaxis is registered, without regard to its conflict of law provisions.</p>
+
+                <h3>10. Contact Information</h3>
+                <p>For any questions about these Terms, please contact us at legal@qraxis.com.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Track form submission to prevent double clicks
+        let isSubmitting = false;
+
+        // Form validation and submission handling
+        function setupFormValidation() {
+            const personalForm = document.getElementById('personal-form');
+            const businessForm = document.getElementById('business-form');
+            const personalSubmit = document.getElementById('personal-submit');
+            const businessSubmit = document.getElementById('business-submit');
+
+            // Personal form validation
+            const personalRequiredFields = [
+                'personal-first-name',
+                'personal-last-name',
+                'personal-email',
+                'personal-phone',
+                'personal-password',
+            ];
+
+            // Business form validation
+            const businessRequiredFields = [
+                'business-name',
+                'business-first-name',
+                'business-last-name',
+                'business-email',
+                'business-phone',
+                'business-password',
+            ];
+
+            // Validate business name length
+            function validateBusinessName(fieldId, errorId) {
+                const field = document.getElementById(fieldId);
+                const error = document.getElementById(errorId);
+                const value = field.value.trim();
+
+                if (value.length > 0 && (value.length < 5 || value.length > 50)) {
+                    field.classList.add('invalid');
+                    error.style.display = 'block';
+                    return false;
+                } else {
+                    field.classList.remove('invalid');
+                    error.style.display = 'none';
+                    return true;
+                }
+            }
+
+            function checkFormCompletion(requiredFields, submitButton, businessNameFieldId = null, businessNameErrorId = null) {
+                let allValid = true;
+
+                // Check required fields
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    const value = field.value.trim();
+
+                    if (value === '') {
+                        allValid = false;
+                        return;
+                    }
+
+                    // Special validation for email fields
+                    if (fieldId.includes('email') && !validateEmail(value)) {
+                        allValid = false;
+                        field.classList.add('invalid');
+                        showError(fieldId, 'Please enter a valid email address');
+                        return;
+                    }
+
+                    // Special validation for phone fields
+                    if (fieldId.includes('phone') && !validatePhone(value)) {
+                        allValid = false;
+                        field.classList.add('invalid');
+                        showError(fieldId, 'Please enter a valid phone number');
+                        return;
+                    }
+
+                    // Clear any previous errors if field is valid
+                    field.classList.remove('invalid');
+                    hideError(fieldId);
+                });
+
+                // Validate business name if provided
+                if (businessNameFieldId && businessNameErrorId) {
+                    const isBusinessNameValid = validateBusinessName(businessNameFieldId, businessNameErrorId);
+                    if (!isBusinessNameValid) {
+                        allValid = false;
+                    }
+                }
+
+                // Validate password if it's a required field
+                if (requiredFields.includes('personal-password')) {
+                    const passwordValid = validatePassword(document.getElementById('personal-password').value);
+                    if (!passwordValid) {
+                        allValid = false;
+                    }
+                }
+
+                if (requiredFields.includes('business-password')) {
+                    const passwordValid = validatePassword(document.getElementById('business-password').value);
+                    if (!passwordValid) {
+                        allValid = false;
+                    }
+                }
+
+                if (submitButton) {
+                    submitButton.disabled = !allValid;
+                }
+                return allValid;
+            }
+
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            function validatePhone(phone) {
+                // Simple phone validation - adjust as needed
+                return phone.length >= 10 && /^[0-9]+$/.test(phone);
+            }
+
+            // Add event listeners to personal form fields
+            personalRequiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                field.addEventListener('input', () => {
+                    checkFormCompletion(personalRequiredFields, personalSubmit);
+                });
+                field.addEventListener('blur', () => {
+                    checkFormCompletion(personalRequiredFields, personalSubmit);
+                });
+            });
+
+            // Add event listeners to business form fields
+            businessRequiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                field.addEventListener('input', () => {
+                    if (fieldId === 'business-name') {
+                        checkFormCompletion(businessRequiredFields, businessSubmit, 'business-name', 'business-name-error');
+                    } else {
+                        checkFormCompletion(businessRequiredFields, businessSubmit);
+                    }
+                });
+                field.addEventListener('blur', () => {
+                    if (fieldId === 'business-name') {
+                        checkFormCompletion(businessRequiredFields, businessSubmit, 'business-name', 'business-name-error');
+                    } else {
+                        checkFormCompletion(businessRequiredFields, businessSubmit);
+                    }
+                });
+            });
+
+            // Personal form submission
+            personalForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                // Prevent double submission
+                if (isSubmitting) return;
+                isSubmitting = true;
+
+                // Disable button during submission
+                personalSubmit.disabled = true;
+                personalSubmit.textContent = 'Processing...';
+
+                const personalPayload = {
+                    firstName: document.getElementById('personal-first-name').value.trim(),
+                    middleName: document.getElementById('personal-middle-name').value.trim(),
+                    lastName: document.getElementById('personal-last-name').value.trim(),
+                    emailId: document.getElementById('personal-email').value.trim(),
+                    mobileNumber: document.getElementById('personal-phone').value.trim(),
+                    password: document.getElementById('personal-password').value,
+                    isEmailActivationRequired: false,
+                };
+
+                try {
+                    const response = await callPersonalSignupApi(personalPayload);
+                    if (response.success) {
+                        alert('Account created successfully!');
+                        // Redirect to dashboard or next step
+                        // window.location.href = '/dashboard';
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                } catch (error) {
+                    console.error('API call failed:', error);
+                    alert('Failed to create account. Please try again.');
+                } finally {
+                    isSubmitting = false;
+                    personalSubmit.disabled = false;
+                    personalSubmit.textContent = 'Continue';
+                }
+            });
+
+            // Business form submission
+            businessForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                // Prevent double submission
+                if (isSubmitting) return;
+                isSubmitting = true;
+
+                // Disable button during submission
+                businessSubmit.disabled = true;
+                businessSubmit.textContent = 'Processing...';
+
+                const businessPayload = {
+                    user: {
+                        // businessId: document.getElementById('business-id').value.trim(),
+                        firstName: document.getElementById('business-first-name').value.trim(),
+                        middleName: document.getElementById('business-middle-name').value.trim(),
+                        lastName: document.getElementById('business-last-name').value.trim(),
+                        emailId: document.getElementById('business-email').value.trim(),
+                        mobileNumber: document.getElementById('business-phone').value.trim(),
+                        // password: document.getElementById('business-password').value.trim(),
+                    },
+                    businessName: document.getElementById('business-name').value.trim(),
+                };
+
+                try {
+                    const response = await callBusinessSignupApi(businessPayload);
+                    if (response.statusCode === 200) {
+                        alert('Business account created successfully!');
+                        // Redirect to dashboard or next step
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                } catch (error) {
+                    console.error('API call failed:', error);
+                    alert('Failed to create account. Please try again.');
+                } finally {
+                    isSubmitting = false;
+                    businessSubmit.disabled = false;
+                    businessSubmit.textContent = 'Continue';
+                }
+            });
+        }
+
+        // API call function
+        async function callBusinessSignupApi(businessPayload) {
+            try {
+                const response = await fetch('https://identity-exp.apps-dev.dhineu.in/bff/tenant/business/create', {
+                    method: 'POST',
+                    headers: {
+                        'tenant-id': 'c4dbd59c-b43a-49a8-8651-bd97a268b657',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(businessPayload)
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error('Error calling API:', error);
+                throw error;
+            }
+        }
+
+        async function callPersonalSignupApi(personalPayload) {
+            try {
+                const response = await fetch('https://identity-exp.apps-dev.dhineu.in/bff/user/create', {
+                    method: 'POST',
+                    headers: {
+                        'business-id': '80098eff-e012-48ec-946e-24f168c616a3',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(personalPayload)
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error('Error calling API:', error);
+                throw error;
+            }
+        }
+
+        // Initialize form validation when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            setupFormValidation();
+        });
+
+        // Slider functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.indicator');
+            let currentSlide = 0;
+            const slideCount = slides.length;
+
+            // Auto-rotate slides every 5 seconds
+            const slideInterval = setInterval(nextSlide, 5000);
+
+            // Set up indicator clicks
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', function () {
+                    const slideIndex = parseInt(this.getAttribute('data-slide'));
+                    goToSlide(slideIndex);
+                    resetInterval();
+                });
+            });
+
+            function nextSlide() {
+                slides[currentSlide].classList.remove('active');
+                indicators[currentSlide].classList.remove('active');
+
+                currentSlide = (currentSlide + 1) % slideCount;
+
+                slides[currentSlide].classList.add('active');
+                indicators[currentSlide].classList.add('active');
+            }
+
+            function goToSlide(index) {
+                slides[currentSlide].classList.remove('active');
+                indicators[currentSlide].classList.remove('active');
+
+                currentSlide = index;
+
+                slides[currentSlide].classList.add('active');
+                indicators[currentSlide].classList.add('active');
+            }
+
+            function resetInterval() {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+
+            // Terms modal functionality
+            const termsModal = document.getElementById('terms-modal');
+            const termsLink = document.getElementById('terms-link');
+            const closeModal = document.querySelector('.close-modal');
+
+            termsLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                termsModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            });
+
+            closeModal.addEventListener('click', function () {
+                termsModal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            });
+
+            // Close modal when clicking outside the content
+            termsModal.addEventListener('click', function (e) {
+                if (e.target === termsModal) {
+                    termsModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Account type selection functionality
+        function showAccountTypeSelection() {
+            document.getElementById('initial-content').style.display = 'none';
+            document.getElementById('account-type-container').style.display = 'block';
+        }
+
+        function selectAccountType(type) {
+            // Remove selected class from all options
+            document.querySelectorAll('.account-type').forEach(el => {
+                el.classList.remove('selected');
+            });
+
+            // Add selected class to clicked option
+            event.currentTarget.classList.add('selected');
+
+            // Hide account type selection
+            document.getElementById('account-type-container').style.display = 'none';
+
+            // Show appropriate form
+            if (type === 'personal') {
+                document.getElementById('personal-form').style.display = 'block';
+                // Trigger initial validation
+                checkFormCompletion(personalRequiredFields, document.getElementById('personal-submit'));
+            } else {
+                document.getElementById('business-form').style.display = 'block';
+                // Trigger initial validation
+                checkFormCompletion(businessRequiredFields, document.getElementById('business-submit'), 'business-name', 'business-name-error');
+            }
+        }
+
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bx-hide');
+                icon.classList.add('bx-show');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bx-show');
+                icon.classList.add('bx-hide');
+            }
+        }
+
+        // Add this to your existing JavaScript
+        function validatePassword(password) {
+            // At least 8 characters, contains at least one letter and one number
+            const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            return regex.test(password);
+        }
+
+        function checkPasswordMatch(passwordId, confirmPasswordId) {
+            const password = document.getElementById(passwordId).value;
+            const confirmPassword = document.getElementById(confirmPasswordId).value;
+            return password === confirmPassword;
+        }
+
+        function updateSubmitButton() {
+            // For personal form
+            const personalPassword = document.getElementById('personal-password')?.value;
+            const personalSubmit = document.getElementById('personal-submit');
+
+            const personalValid = validatePassword(personalPassword)
+            // For business form
+            const businessPassword = document.getElementById('business-password').value;
+            const businessSubmit = document.getElementById('business-submit');
+
+            const businessValid = validatePassword(businessPassword)
+            // Update button states
+            if (personalSubmit) {
+                personalSubmit.disabled = !personalValid;
+            }
+            if (businessSubmit) {
+                businessSubmit.disabled = !businessValid;
+            }
+        }
+
+        // Add event listeners for password fields
+        document.addEventListener('DOMContentLoaded', function () {
+            // Personal form password fields
+            document.getElementById('personal-password')?.addEventListener('input', function () {
+                validatePasswordField('personal-password');
+                updateSubmitButton();
+            });
+
+            document.getElementById('personal-confirm-password')?.addEventListener('input', function () {
+                validatePasswordMatch('personal-password', 'personal-confirm-password');
+                updateSubmitButton();
+            });
+
+            // Business form password fields
+            document.getElementById('business-password')?.addEventListener('input', function () {
+                validatePasswordField('business-password');
+                updateSubmitButton();
+            });
+
+            document.getElementById('business-confirm-password')?.addEventListener('input', function () {
+                validatePasswordMatch('business-password', 'business-confirm-password');
+                updateSubmitButton();
+            });
+        });
+
+        function validatePasswordField(fieldId) {
+            const field = document.getElementById(fieldId);
+            const isValid = validatePassword(field.value);
+
+            if (field.value && !isValid) {
+                field.classList.add('invalid');
+                showError(fieldId, 'Password must be at least 8 characters with at least one letter and one number');
+            } else {
+                field.classList.remove('invalid');
+                hideError(fieldId);
+            }
+        }
+
+        function validatePasswordMatch(passwordId, confirmPasswordId) {
+            const passwordField = document.getElementById(passwordId);
+            const confirmField = document.getElementById(confirmPasswordId);
+            const isMatch = checkPasswordMatch(passwordId, confirmPasswordId);
+
+            if (confirmField.value && !isMatch) {
+                confirmField.classList.add('invalid');
+                showError(confirmPasswordId, 'Passwords do not match');
+            } else {
+                confirmField.classList.remove('invalid');
+                hideError(confirmPasswordId);
+            }
+        }
+
+        function showError(fieldId, message) {
+            let errorElement = document.getElementById(`${fieldId}-error`);
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.id = `${fieldId}-error`;
+                errorElement.className = 'error-message';
+                document.getElementById(fieldId).parentNode.appendChild(errorElement);
+            }
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function hideError(fieldId) {
+            const errorElement = document.getElementById(`${fieldId}-error`);
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function backToAccountType() {
+            // Hide all forms
+            document.getElementById('personal-form').style.display = 'none';
+            document.getElementById('business-form').style.display = 'none';
+
+            // Show account type selection
+            document.getElementById('account-type-container').style.display = 'block';
+        }
+
+        function showLogin() {
+            // Hide all signup-related elements
+            document.getElementById('initial-content').style.display = 'none';
+            document.getElementById('account-type-container').style.display = 'none';
+            document.getElementById('personal-form').style.display = 'none';
+            document.getElementById('business-form').style.display = 'none';
+
+            // Show login form
+            document.getElementById('login-form').style.display = 'block';
+
+            // Update footer to show signup link instead
+            document.querySelector('.footer-left').innerHTML = `
+        <p>Don't have an account?</p>
+        <a href="#" class="footer-link" style="color: var(--primary); margin-left: 5px;" onclick="showSignup()">Sign up</a>
+    `;
+        }
+
+        function showSignup() {
+            // Hide login form
+            document.getElementById('login-form').style.display = 'none';
+
+            // Show initial signup content
+            document.getElementById('initial-content').style.display = 'block';
+
+            // Reset footer to show login link
+            document.querySelector('.footer-left').innerHTML = `
+        <p>Already have an account?</p>
+        <a href="#" class="footer-link" style="color: var(--primary); margin-left: 5px;" onclick="showLogin()">Login</a>
+    `;
+        }
+
+        // Add to your setupFormValidation function
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const email = document.getElementById('login-email').value.trim();
+                const password = document.getElementById('login-password').value;
+                const rememberMe = document.getElementById('remember-me').checked;
+
+                if (!email || !password) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+
+                try {
+                    // Disable button during submission
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Logging in...';
+
+                    // Call your login API
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email,
+                            password,
+                            rememberMe
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // Successful login - redirect or update UI
+                        window.location.href = '/dashboard';
+                    } else {
+                        alert(data.message || 'Login failed');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert('An error occurred during login');
+                } finally {
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Login';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
