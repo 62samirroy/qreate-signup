@@ -1119,6 +1119,7 @@
 
             document.getElementById('personal-last-name').addEventListener('input', checkPersonalFormCompletion);
             document.getElementById('personal-last-name').addEventListener('blur', function () {
+                touchedFields.add('personal-last-name');
                 validateRequiredField('personal-last-name', 'Last name');
                 checkPersonalFormCompletion();
             });
