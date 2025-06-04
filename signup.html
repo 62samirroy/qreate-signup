@@ -24,14 +24,13 @@
             margin: 0;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             display: flex;
-            min-height: 100vh;
+            height: 100vh;
             background: var(--light-bg);
             color: var(--dark-text);
         }
 
         .container {
             display: flex;
-            overflow-y: scroll;
             width: 100%;
         }
 
@@ -143,7 +142,7 @@
         }
 
         .logo {
-            height: 150px;
+            height: 140px;
             width: auto;
             max-width: 180px;
             object-fit: contain;
@@ -152,7 +151,7 @@
         .card h2 {
             font-size: 2.2rem;
             color: var(--primary);
-            margin: 5px 0 10px;
+            margin: 2px 0 5px;
             font-weight: 700;
             text-align: center;
 
@@ -213,10 +212,10 @@
         }
 
         .features {
-            margin-top: 40px;
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 8px;
         }
 
         .feature {
@@ -286,7 +285,7 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             width: 100%;
             position: relative;
         }
@@ -377,7 +376,7 @@
         .form-row {
             display: flex;
             width: 100%;
-            gap: 7px;
+            gap: 5px;
         }
 
         .form-row .form-group {
@@ -672,7 +671,7 @@
                     </div>
 
                     <!-- Account type selection -->
-                    <div id="account-type-container" class="account-type-container">
+                    <div id="account-type-container" class="account-type-container" style="display: none;">
                         <h2>Choose Account Type</h2>
                         <p class="desc">Select the type of account that best fits your needs</p>
 
@@ -689,7 +688,7 @@
                     </div>
 
                     <!-- Personal Signup Form -->
-                    <form id="personal-form" class="signup-form">
+                    <form id="personal-form" class="signup-form" style="display: none;">
                         <h2>Personal Information</h2>
 
                         <div class="form-row">
@@ -704,6 +703,7 @@
                                     <input type="text" id="personal-first-name" required
                                         placeholder="Enter your first name">
                                 </div>
+                                <div id="personal-first-name-error" class="error-message"></div>
                             </div>
                             <div class="form-group">
                                 <label for="personal-middle-name">Middle Name</label>
@@ -727,6 +727,7 @@
                                     <input type="text" id="personal-last-name" required
                                         placeholder="Enter your last name">
                                 </div>
+                                <div id="personal-last-name-error" class="error-message"></div>
                             </div>
                         </div>
 
@@ -768,8 +769,21 @@
                     </form>
 
                     <!-- Business Signup Form -->
-                    <form id="business-form" class="signup-form">
+                    <form id="business-form" class="signup-form" style="display: none;">
                         <h2>Business Information</h2>
+                        <div class="form-group">
+                            <label for="business-name">Business Name <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="currentColor">
+                                    <path
+                                        d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
+                                </svg>
+                                <input type="text" id="business-name" required placeholder="Enter your business name"
+                                    minlength="5" maxlength="50">
+                            </div>
+                            <div id="business-name-error" class="error-message"></div>
+                        </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="business-first-name">First Name <span class="required">*</span></label>
@@ -782,6 +796,7 @@
                                     <input type="text" id="business-first-name" required
                                         placeholder="Enter your first name">
                                 </div>
+                                <div id="business-first-name-error" class="error-message"></div>
                             </div>
 
                             <div class="form-group">
@@ -807,6 +822,7 @@
                                     <input type="text" id="business-last-name" required
                                         placeholder="Enter your last name">
                                 </div>
+                                <div id="business-last-name-error" class="error-message"></div>
                             </div>
                         </div>
 
@@ -840,24 +856,6 @@
                             </div>
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="business-name">Business Name <span class="required">*</span></label>
-                                <div class="input-wrapper">
-                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                        fill="currentColor">
-                                        <path
-                                            d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
-                                    </svg>
-                                    <input type="text" id="business-name" required
-                                        placeholder="Enter your business name" minlength="5" maxlength="50">
-                                </div>
-                                <div class="error-message" id="business-name-error">Business name must be between 5 and
-                                    50
-                                    characters</div>
-                            </div>
-                        </div>
-
                         <div style="display: flex; justify-content: space-between;">
                             <button type="button" class="back-button" onclick="backToAccountType()">
                                 <i class='bx bx-chevron-left'></i> Back
@@ -869,7 +867,7 @@
                 </div>
                 <!-- Add this footer section below the button -->
                 <div class="card-footer">
-                    <div class="footer-left" style="display: flex; align-items: center;">
+                    <div class="footer-left" style="display: flex; align-items: center; margin-left: 10px;">
                         <p>Already have an account?</p>
                         <a href="#" class="footer-link" style="color: var(--primary); margin-left: 5px;"
                             onclick="showLogin()">Login</a>
@@ -879,75 +877,79 @@
         </div>
     </div>
 
-    <!-- Terms and Conditions Modal -->
-    <div class="modal" id="terms-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Terms and Conditions</h2>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="terms-content">
-                <h3>1. Acceptance of Terms</h3>
-                <p>By accessing or using the QRaxis platform, you agree to be bound by these Terms and Conditions. If
-                    you do not agree with any part of these terms, you must not use our services.</p>
-
-                <h3>2. Description of Service</h3>
-                <p>QRaxis provides QR code generation and management services, including but not limited to:</p>
-                <ul>
-                    <li>Creation of customizable QR codes</li>
-                    <li>Dynamic QR code functionality</li>
-                    <li>Analytics and tracking services</li>
-                    <li>API access for developers</li>
-                </ul>
-
-                <h3>3. User Responsibilities</h3>
-                <p>As a user of QRaxis, you agree to:</p>
-                <ul>
-                    <li>Provide accurate and complete registration information</li>
-                    <li>Maintain the confidentiality of your account credentials</li>
-                    <li>Not use the service for any illegal or unauthorized purpose</li>
-                    <li>Comply with all applicable laws and regulations</li>
-                </ul>
-
-                <h3>4. Prohibited Content</h3>
-                <p>You may not use QRaxis to create QR codes that link to:</p>
-                <ul>
-                    <li>Illegal content or activities</li>
-                    <li>Malware or phishing sites</li>
-                    <li>Adult or explicit content without proper age verification</li>
-                    <li>Content that infringes on intellectual property rights</li>
-                    <li>Content that promotes hate speech or discrimination</li>
-                </ul>
-
-                <h3>5. Privacy Policy</h3>
-                <p>Your use of QRaxis is also governed by our Privacy Policy, which explains how we collect, use, and
-                    protect your personal information.</p>
-
-                <h3>6. Limitation of Liability</h3>
-                <p>QRaxis shall not be liable for any indirect, incidental, special, consequential or punitive damages
-                    resulting from your use of or inability to use the service.</p>
-
-                <h3>7. Changes to Terms</h3>
-                <p>We reserve the right to modify these terms at any time. Continued use of the service after such
-                    changes constitutes your acceptance of the new terms.</p>
-
-                <h3>8. Termination</h3>
-                <p>We may terminate or suspend your account immediately, without prior notice or liability, for any
-                    reason whatsoever, including without limitation if you breach these Terms.</p>
-
-                <h3>9. Governing Law</h3>
-                <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction where
-                    QRaxis is registered, without regard to its conflict of law provisions.</p>
-
-                <h3>10. Contact Information</h3>
-                <p>For any questions about these Terms, please contact us at legal@qraxis.com.</p>
-            </div>
-        </div>
-    </div>
-
     <script>
+        // Slider functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.indicator');
+            let currentSlide = 0;
+            const slideCount = slides.length;
+
+            // Auto-rotate slides every 5 seconds
+            const slideInterval = setInterval(nextSlide, 5000);
+
+            // Set up indicator clicks
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', function () {
+                    const slideIndex = parseInt(this.getAttribute('data-slide'));
+                    goToSlide(slideIndex);
+                    resetInterval();
+                });
+            });
+
+            function nextSlide() {
+                slides[currentSlide].classList.remove('active');
+                indicators[currentSlide].classList.remove('active');
+
+                currentSlide = (currentSlide + 1) % slideCount;
+
+                slides[currentSlide].classList.add('active');
+                indicators[currentSlide].classList.add('active');
+            }
+
+            function goToSlide(index) {
+                slides[currentSlide].classList.remove('active');
+                indicators[currentSlide].classList.remove('active');
+
+                currentSlide = index;
+
+                slides[currentSlide].classList.add('active');
+                indicators[currentSlide].classList.add('active');
+            }
+
+            function resetInterval() {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+
+            // Terms modal functionality
+            const termsModal = document.getElementById('terms-modal');
+            const termsLink = document.getElementById('terms-link');
+            const closeModal = document.querySelector('.close-modal');
+
+            termsLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                termsModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            });
+
+            closeModal.addEventListener('click', function () {
+                termsModal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            });
+
+            // Close modal when clicking outside the content
+            termsModal.addEventListener('click', function (e) {
+                if (e.target === termsModal) {
+                    termsModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
         // Track form submission to prevent double clicks
         let isSubmitting = false;
+        const touchedFields = new Set();
 
         // Form validation and submission handling
         function setupFormValidation() {
@@ -956,131 +958,234 @@
             const personalSubmit = document.getElementById('personal-submit');
             const businessSubmit = document.getElementById('business-submit');
 
-            // Personal form validation
-            const personalRequiredFields = [
-                'personal-first-name',
-                'personal-last-name',
-                'personal-email',
-                'personal-phone',
-            ];
-
-            // Business form validation
-            const businessRequiredFields = [
-                'business-name',
-                'business-first-name',
-                'business-last-name',
-                'business-email',
-                'business-phone',
-            ];
-
-            // Validate business name length
-            function validateBusinessName(fieldId, errorId) {
+            // Validate required field
+            function validateRequiredField(fieldId, fieldName,) {
                 const field = document.getElementById(fieldId);
-                const error = document.getElementById(errorId);
                 const value = field.value.trim();
 
-                if (value.length > 0 && (value.length < 5 || value.length > 50)) {
-                    field.classList.add('invalid');
-                    error.style.display = 'block';
+                if (value === '') {
+                    if (touchedFields.has(fieldId)) {
+                        field.classList.add('invalid');
+                        showError(fieldId, `${fieldName} is required`);
+                    } else {
+                        hideError(fieldId);
+                        field.classList.remove('invalid');
+                    }
                     return false;
-                } else {
-                    field.classList.remove('invalid');
-                    error.style.display = 'none';
-                    return true;
                 }
+
+                // Additional validation for name fields
+                if (fieldId.includes('first-name') || fieldId.includes('last-name')) {
+                    if (!/^[a-zA-Z]+$/.test(value)) {
+                        field.classList.add('invalid');
+                        showError(fieldId, `${fieldName} should contain only letters`);
+                        return false;
+                    }
+                    if (value.length < 2) {
+                        field.classList.add('invalid');
+                        showError(fieldId, `${fieldName} should be at least 2 characters`);
+                        return false;
+                    }
+                }
+
+                field.classList.remove('invalid');
+                hideError(fieldId);
+                return true;
             }
 
-            function checkFormCompletion(requiredFields, submitButton, businessNameFieldId = null, businessNameErrorId = null) {
-                let allValid = true;
+            function validateEmail(fieldId) {
+                const field = document.getElementById(fieldId);
+                const email = field.value.trim();
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                // Check required fields
-                requiredFields.forEach(fieldId => {
-                    const field = document.getElementById(fieldId);
-                    const value = field.value.trim();
-
-                    if (value === '') {
-                        allValid = false;
-                        return;
+                if (email === '') {
+                    if (touchedFields.has(fieldId)) {
+                        field.classList.add('invalid');
+                        showError(fieldId, 'Email address is required');
+                    } else {
+                        hideError(fieldId);
+                        field.classList.remove('invalid');
                     }
+                    return false;
+                }
 
-                    // Special validation for email fields
-                    if (fieldId.includes('email') && !validateEmail(value)) {
-                        allValid = false;
+                if (!re.test(email)) {
+                    if (touchedFields.has(fieldId)) {
                         field.classList.add('invalid');
                         showError(fieldId, 'Please enter a valid email address');
-                        return;
+                    } else {
+                        hideError(fieldId);
+                        field.classList.remove('invalid');
                     }
+                    return false;
+                }
 
-                    // Special validation for phone fields
-                    if (fieldId.includes('phone') && !validatePhone(value)) {
-                        allValid = false;
+                field.classList.remove('invalid');
+                hideError(fieldId);
+                return true;
+            }
+
+            function validatePhone(fieldId) {
+                const field = document.getElementById(fieldId);
+                const phone = field.value.trim();
+
+                if (phone === '') {
+                    if (touchedFields.has(fieldId)) {
                         field.classList.add('invalid');
-                        showError(fieldId, 'Please enter a valid phone number');
-                        return;
+                        showError(fieldId, 'Mobile number is required');
+                    } else {
+                        hideError(fieldId);
+                        field.classList.remove('invalid');
                     }
-
-                    // Clear any previous errors if field is valid
-                    field.classList.remove('invalid');
-                    hideError(fieldId);
-                });
-
-                // Validate business name if provided
-                if (businessNameFieldId && businessNameErrorId) {
-                    const isBusinessNameValid = validateBusinessName(businessNameFieldId, businessNameErrorId);
-                    if (!isBusinessNameValid) {
-                        allValid = false;
-                    }
+                    return false;
                 }
 
-                if (submitButton) {
-                    submitButton.disabled = !allValid;
+                // Basic phone validation - adjust based on your requirements
+                if (!/^[0-9]{10,15}$/.test(phone)) {
+                    if (touchedFields.has(fieldId)) {
+                        field.classList.add('invalid');
+                        showError(fieldId, 'Please enter a valid phone number (10-15 digits)');
+                    } else {
+                        hideError(fieldId);
+                        field.classList.remove('invalid');
+                    }
+                    return false;
                 }
-                return allValid;
+
+                field.classList.remove('invalid');
+                hideError(fieldId);
+                return true;
             }
 
-            function validateEmail(email) {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
+            // Validate business name length
+            function validateBusinessName(fieldId) {
+                const field = document.getElementById(fieldId);
+                const value = field.value.trim();
+
+                if (value === '') {
+                    if (touchedFields.has(fieldId)) {
+                        field.classList.add('invalid');
+                        showError(fieldId, 'Business name is required');
+                    } else {
+                        hideError(fieldId);
+                        field.classList.remove('invalid');
+                    }
+                    return false;
+                }
+
+                if (value.length < 5 || value.length > 50) {
+                    if (touchedFields.has(fieldId)) {
+                        field.classList.add('invalid');
+                        showError(fieldId, 'Business name must be between 5 and 50 characters');
+                    } else {
+                        hideError(fieldId);
+                        field.classList.remove('invalid');
+                    }
+                    return false;
+                }
+
+                field.classList.remove('invalid');
+                hideError(fieldId);
+                return true;
             }
 
-            function validatePhone(phone) {
-                // Simple phone validation - adjust as needed
-                return phone.length >= 10 && /^[0-9]+$/.test(phone);
+            function checkPersonalFormCompletion() {
+                const isFirstNameValid = validateRequiredField('personal-first-name', 'First name');
+                const isLastNameValid = validateRequiredField('personal-last-name', 'Last name');
+                const isEmailValid = validateEmail('personal-email');
+                const isPhoneValid = validatePhone('personal-phone');
+
+                personalSubmit.disabled = !(isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid);
+            }
+
+            function checkBusinessFormCompletion() {
+                const isBusinessNameValid = validateBusinessName('business-name');
+                const isFirstNameValid = validateRequiredField('business-first-name', 'First name');
+                const isLastNameValid = validateRequiredField('business-last-name', 'Last name');
+                const isEmailValid = validateEmail('business-email');
+                const isPhoneValid = validatePhone('business-phone');
+
+                businessSubmit.disabled = !(isBusinessNameValid && isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid);
             }
 
             // Add event listeners to personal form fields
-            personalRequiredFields.forEach(fieldId => {
-                const field = document.getElementById(fieldId);
-                field.addEventListener('input', () => {
-                    checkFormCompletion(personalRequiredFields, personalSubmit);
-                });
-                field.addEventListener('blur', () => {
-                    checkFormCompletion(personalRequiredFields, personalSubmit);
-                });
+
+            document.getElementById('personal-first-name').addEventListener('input', checkPersonalFormCompletion);
+            document.getElementById('personal-first-name').addEventListener('blur', function () {
+                touchedFields.add('personal-first-name');
+                validateRequiredField('personal-first-name', 'First name');
+                checkPersonalFormCompletion();
+            });
+
+            document.getElementById('personal-last-name').addEventListener('input', checkPersonalFormCompletion);
+            document.getElementById('personal-last-name').addEventListener('blur', function () {
+                validateRequiredField('personal-last-name', 'Last name');
+                checkPersonalFormCompletion();
+            });
+
+            document.getElementById('personal-email').addEventListener('input', checkPersonalFormCompletion);
+            document.getElementById('personal-email').addEventListener('blur', function () {
+                touchedFields.add('personal-email');
+                validateEmail('personal-email');
+                checkPersonalFormCompletion();
+            });
+
+            document.getElementById('personal-phone').addEventListener('input', checkPersonalFormCompletion);
+            document.getElementById('personal-phone').addEventListener('blur', function () {
+                touchedFields.add('personal-phone');
+                validatePhone('personal-phone');
+                checkPersonalFormCompletion();
             });
 
             // Add event listeners to business form fields
-            businessRequiredFields.forEach(fieldId => {
-                const field = document.getElementById(fieldId);
-                field.addEventListener('input', () => {
-                    if (fieldId === 'business-name') {
-                        checkFormCompletion(businessRequiredFields, businessSubmit, 'business-name', 'business-name-error');
-                    } else {
-                        checkFormCompletion(businessRequiredFields, businessSubmit);
-                    }
-                });
-                field.addEventListener('blur', () => {
-                    if (fieldId === 'business-name') {
-                        checkFormCompletion(businessRequiredFields, businessSubmit, 'business-name', 'business-name-error');
-                    } else {
-                        checkFormCompletion(businessRequiredFields, businessSubmit);
-                    }
-                });
+            document.getElementById('business-name').addEventListener('input', checkBusinessFormCompletion);
+            document.getElementById('business-name').addEventListener('blur', function () {
+                touchedFields.add('business-name');
+                validateBusinessName('business-name');
+                checkBusinessFormCompletion();
+            });
+
+            document.getElementById('business-first-name').addEventListener('input', checkBusinessFormCompletion);
+            document.getElementById('business-first-name').addEventListener('blur', function () {
+                touchedFields.add('business-first-name');
+                validateRequiredField('business-first-name', 'First name');
+                checkBusinessFormCompletion();
+            });
+
+            document.getElementById('business-last-name').addEventListener('input', checkBusinessFormCompletion);
+            document.getElementById('business-last-name').addEventListener('blur', function () {
+                touchedFields.add('business-last-name');
+                validateRequiredField('business-last-name', 'Last name');
+                checkBusinessFormCompletion();
+            });
+
+            document.getElementById('business-email').addEventListener('input', checkBusinessFormCompletion);
+            document.getElementById('business-email').addEventListener('blur', function () {
+                touchedFields.add('business-email');
+                validateEmail('business-email');
+                checkBusinessFormCompletion();
+            });
+
+            // Business phone 
+            document.getElementById('business-phone').addEventListener('input', checkBusinessFormCompletion);
+            document.getElementById('business-phone').addEventListener('blur', function () {
+                touchedFields.add('business-phone');
+                validatePhone('business-phone');
+                checkBusinessFormCompletion();
             });
 
             // Personal form submission
             personalForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
+
+                // Validate all fields again before submission
+                ['personal-first-name', 'personal-last-name', 'personal-email', 'personal-phone'].forEach(id => touchedFields.add(id));
+                checkPersonalFormCompletion();
+
+                if (personalSubmit.disabled) {
+                    // If form is invalid, don't submit
+                    return;
+                }
 
                 // Prevent double submission
                 if (isSubmitting) return;
@@ -1122,6 +1227,14 @@
             businessForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
 
+                // Validate all fields again before submission
+                checkBusinessFormCompletion();
+
+                if (businessSubmit.disabled) {
+                    // If form is invalid, don't submit
+                    return;
+                }
+
                 // Prevent double submission
                 if (isSubmitting) return;
                 isSubmitting = true;
@@ -1132,7 +1245,6 @@
 
                 const businessPayload = {
                     user: {
-                        // businessId: document.getElementById('business-id').value.trim(),
                         firstName: document.getElementById('business-first-name').value.trim(),
                         middleName: document.getElementById('business-middle-name').value.trim(),
                         lastName: document.getElementById('business-last-name').value.trim(),
@@ -1204,79 +1316,26 @@
             }
         }
 
-        // Initialize form validation when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function () {
-            setupFormValidation();
-        });
-
-        // Slider functionality
-        document.addEventListener('DOMContentLoaded', function () {
-            const slides = document.querySelectorAll('.slide');
-            const indicators = document.querySelectorAll('.indicator');
-            let currentSlide = 0;
-            const slideCount = slides.length;
-
-            // Auto-rotate slides every 5 seconds
-            const slideInterval = setInterval(nextSlide, 5000);
-
-            // Set up indicator clicks
-            indicators.forEach(indicator => {
-                indicator.addEventListener('click', function () {
-                    const slideIndex = parseInt(this.getAttribute('data-slide'));
-                    goToSlide(slideIndex);
-                    resetInterval();
-                });
-            });
-
-            function nextSlide() {
-                slides[currentSlide].classList.remove('active');
-                indicators[currentSlide].classList.remove('active');
-
-                currentSlide = (currentSlide + 1) % slideCount;
-
-                slides[currentSlide].classList.add('active');
-                indicators[currentSlide].classList.add('active');
+        // Show error message
+        function showError(fieldId, message) {
+            let errorElement = document.getElementById(`${fieldId}-error`);
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.id = `${fieldId}-error`;
+                errorElement.className = 'error-message';
+                document.getElementById(fieldId).parentNode.appendChild(errorElement);
             }
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
 
-            function goToSlide(index) {
-                slides[currentSlide].classList.remove('active');
-                indicators[currentSlide].classList.remove('active');
-
-                currentSlide = index;
-
-                slides[currentSlide].classList.add('active');
-                indicators[currentSlide].classList.add('active');
+        // Hide error message
+        function hideError(fieldId) {
+            const errorElement = document.getElementById(`${fieldId}-error`);
+            if (errorElement) {
+                errorElement.style.display = 'none';
             }
-
-            function resetInterval() {
-                clearInterval(slideInterval);
-                slideInterval = setInterval(nextSlide, 5000);
-            }
-
-            // Terms modal functionality
-            const termsModal = document.getElementById('terms-modal');
-            const termsLink = document.getElementById('terms-link');
-            const closeModal = document.querySelector('.close-modal');
-
-            termsLink.addEventListener('click', function (e) {
-                e.preventDefault();
-                termsModal.style.display = 'flex';
-                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-            });
-
-            closeModal.addEventListener('click', function () {
-                termsModal.style.display = 'none';
-                document.body.style.overflow = 'auto'; // Re-enable scrolling
-            });
-
-            // Close modal when clicking outside the content
-            termsModal.addEventListener('click', function (e) {
-                if (e.target === termsModal) {
-                    termsModal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        });
+        }
 
         // Account type selection functionality
         function showAccountTypeSelection() {
@@ -1299,49 +1358,8 @@
             // Show appropriate form
             if (type === 'personal') {
                 document.getElementById('personal-form').style.display = 'block';
-                // Trigger initial validation
-                checkFormCompletion(personalRequiredFields, document.getElementById('personal-submit'));
             } else {
                 document.getElementById('business-form').style.display = 'block';
-                // Trigger initial validation
-                checkFormCompletion(businessRequiredFields, document.getElementById('business-submit'), 'business-name', 'business-name-error');
-            }
-        }
-
-        function updateSubmitButton() {
-            // For personal form
-            const personalSubmit = document.getElementById('personal-submit');
-
-            const personalValid = validatePassword(personalPassword)
-            // For business form
-            const businessSubmit = document.getElementById('business-submit');
-
-            const businessValid = validatePassword(businessPassword)
-            // Update button states
-            if (personalSubmit) {
-                personalSubmit.disabled = !personalValid;
-            }
-            if (businessSubmit) {
-                businessSubmit.disabled = !businessValid;
-            }
-        }
-
-        function showError(fieldId, message) {
-            let errorElement = document.getElementById(`${fieldId}-error`);
-            if (!errorElement) {
-                errorElement = document.createElement('div');
-                errorElement.id = `${fieldId}-error`;
-                errorElement.className = 'error-message';
-                document.getElementById(fieldId).parentNode.appendChild(errorElement);
-            }
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-
-        function hideError(fieldId) {
-            const errorElement = document.getElementById(`${fieldId}-error`);
-            if (errorElement) {
-                errorElement.style.display = 'none';
             }
         }
 
@@ -1360,8 +1378,17 @@
             document.getElementById('account-type-container').style.display = 'none';
             document.getElementById('personal-form').style.display = 'none';
             document.getElementById('business-form').style.display = 'none';
+
+            // Here you would typically show the login form
+            alert('Login functionality would be implemented here');
         }
+
+        // Initialize form validation when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            setupFormValidation();
+        });
     </script>
+
 </body>
 
 </html>
