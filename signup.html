@@ -122,12 +122,13 @@
 
         .card {
             flex: 1;
-            padding-left: 20px;
-            padding-right: 20px;
+            padding: auto auto auto;
             display: flex;
             flex-direction: column;
             position: relative;
             align-items: center;
+            justify-content: center;
+            height: 100%;
         }
 
         .logo-container {
@@ -154,6 +155,7 @@
             margin: 5px 0 10px;
             font-weight: 700;
             text-align: center;
+
         }
 
         .desc {
@@ -196,6 +198,7 @@
             width: 100%;
             font-size: 0.9rem;
             margin-top: auto;
+            height: fit-content;
         }
 
         .footer-link {
@@ -488,7 +491,10 @@
         /* Keep this to ensure proper spacing */
         .input-wrapper input[type="password"],
         .input-wrapper input[type="text"] {
-            padding-right: 40px;
+            padding-right: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .error-message {
@@ -647,275 +653,226 @@
 
             <!-- Sign-up card -->
             <div class="card">
-                <div class="logo-container">
-                    <img src="image/logo.png" alt="QR Praxis Logo" class="logo">
+                <div
+                    style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                    <div class="logo-container">
+                        <img src="image/logo.png" alt="QR Praxis Logo" class="logo">
+                    </div>
+
+                    <!-- Initial content -->
+                    <div id="initial-content">
+                        <h2>Get Started with QRaxis</h2>
+                        <p class="desc">
+                            Join thousands of professionals creating beautiful, functional QR codes
+                            for their businesses and personal brands.
+                        </p>
+                        <div style="display: flex; justify-content: center;">
+                            <button onclick="showAccountTypeSelection()">Create Account</button>
+                        </div>
+                    </div>
+
+                    <!-- Account type selection -->
+                    <div id="account-type-container" class="account-type-container">
+                        <h2>Choose Account Type</h2>
+                        <p class="desc">Select the type of account that best fits your needs</p>
+
+                        <div class="account-type-options">
+                            <div class="account-type" onclick="selectAccountType('personal')">
+                                <h3>Personal</h3>
+                                <p>For individual users and personal projects</p>
+                            </div>
+                            <div class="account-type" onclick="selectAccountType('business')">
+                                <h3>Business</h3>
+                                <p>For companies and organizations</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Signup Form -->
+                    <form id="personal-form" class="signup-form">
+                        <h2>Personal Information</h2>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="personal-first-name">First Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                    </svg>
+                                    <input type="text" id="personal-first-name" required
+                                        placeholder="Enter your first name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="personal-middle-name">Middle Name</label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                    </svg>
+                                    <input type="text" id="personal-middle-name" placeholder="Enter your middle name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="personal-last-name">Last Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                    </svg>
+                                    <input type="text" id="personal-last-name" required
+                                        placeholder="Enter your last name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="personal-email">Email Address <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                                    </svg>
+                                    <input type="email" id="personal-email" required
+                                        placeholder="Enter your email address">
+                                </div>
+                                <div id="personal-email-error" class="error-message"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="personal-phone">Mobile Number <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
+                                    </svg>
+                                    <input type="tel" id="personal-phone" required
+                                        placeholder="Enter your mobile number">
+                                </div>
+                                <div id="personal-phone-error" class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="button" class="back-button" onclick="backToAccountType()">
+                                <i class='bx bx-chevron-left'></i> Back </button>
+
+                            <button type="submit" class="primary-button" id="personal-submit" disabled>Continue</button>
+                        </div>
+                    </form>
+
+                    <!-- Business Signup Form -->
+                    <form id="business-form" class="signup-form">
+                        <h2>Business Information</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="business-first-name">First Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                    </svg>
+                                    <input type="text" id="business-first-name" required
+                                        placeholder="Enter your first name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="business-middle-name">Middle Name</label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                    </svg>
+                                    <input type="text" id="business-middle-name" placeholder="Enter your middle name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="business-last-name">Last Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                    </svg>
+                                    <input type="text" id="business-last-name" required
+                                        placeholder="Enter your last name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="business-email">Email Address <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                                    </svg>
+                                    <input type="email" id="business-email" required
+                                        placeholder="Enter your business email">
+                                </div>
+                                <div id="business-email-error" class="error-message"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="business-phone">Mobile Number <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
+                                    </svg>
+                                    <input type="tel" id="business-phone" required
+                                        placeholder="Enter your mobile number">
+                                </div>
+                                <div id="business-phone-error" class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="business-name">Business Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
+                                    </svg>
+                                    <input type="text" id="business-name" required
+                                        placeholder="Enter your business name" minlength="5" maxlength="50">
+                                </div>
+                                <div class="error-message" id="business-name-error">Business name must be between 5 and
+                                    50
+                                    characters</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="button" class="back-button" onclick="backToAccountType()">
+                                <i class='bx bx-chevron-left'></i> Back
+                            </button>
+
+                            <button type="submit" class="primary-button" id="business-submit" disabled>Continue</button>
+                        </div>
+                    </form>
                 </div>
-
-                <!-- Initial content -->
-                <div id="initial-content">
-                    <h2>Get Started with QRaxis</h2>
-                    <p class="desc">
-                        Join thousands of professionals creating beautiful, functional QR codes
-                        for their businesses and personal brands.
-                    </p>
-                    <div style="display: flex; justify-content: center;">
-                        <button onclick="showAccountTypeSelection()">Create Account</button>
-                    </div>
-                </div>
-
-                <!-- Account type selection -->
-                <div id="account-type-container" class="account-type-container">
-                    <h2>Choose Account Type</h2>
-                    <p class="desc">Select the type of account that best fits your needs</p>
-
-                    <div class="account-type-options">
-                        <div class="account-type" onclick="selectAccountType('personal')">
-                            <h3>Personal</h3>
-                            <p>For individual users and personal projects</p>
-                        </div>
-                        <div class="account-type" onclick="selectAccountType('business')">
-                            <h3>Business</h3>
-                            <p>For companies and organizations</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Personal Signup Form -->
-                <form id="personal-form" class="signup-form">
-                    <h2>Personal Information</h2>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="personal-first-name">First Name <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path
-                                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                </svg>
-                                <input type="text" id="personal-first-name" required
-                                    placeholder="Enter your first name">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="personal-middle-name">Middle Name</label>
-                            <div class="input-wrapper">
-                                <input type="text" style="padding: 4px" id="personal-middle-name"
-                                    placeholder="Enter your middle name">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="personal-last-name">Last Name <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <input type="text" style="padding: 4px" id="personal-last-name" required
-                                    placeholder="Enter your last name">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="personal-email">Email Address <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path
-                                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                                </svg>
-                                <input type="email" id="personal-email" required placeholder="Enter your email address">
-                            </div>
-                            <div id="personal-email-error" class="error-message"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="personal-phone">Mobile Number <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path
-                                        d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
-                                </svg>
-                                <input type="tel" id="personal-phone" required placeholder="Enter your mobile number">
-                            </div>
-                            <div id="personal-phone-error" class="error-message"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="personal-password">Password <span class="required">*</span></label>
-                        <div class="input-wrapper">
-                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                fill="currentColor">
-                                <path
-                                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
-                            </svg>
-                            <input type="password" id="personal-password" required placeholder="Create a password"
-                                minlength="8">
-                            <i class='bx bx-hide password-toggle-icon'
-                                onclick="togglePassword('personal-password', this)"></i>
-                        </div>
-                        <div id="personal-password-error" class="error-message"></div>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between;">
-                        <button type="button" class="back-button" onclick="backToAccountType()">
-                            <i class='bx bx-chevron-left'></i> Back </button>
-
-                        <button type="submit" class="primary-button" id="personal-submit" disabled>Continue</button>
-                    </div>
-                </form>
-
-                <!-- Business Signup Form -->
-                <form id="business-form" class="signup-form">
-                    <h2>Business Information</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="business-first-name">First Name <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path
-                                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                </svg>
-                                <input type="text" id="business-first-name" required
-                                    placeholder="Enter your first name">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="business-middle-name">Middle Name</label>
-                            <input type="text" style="padding: 4px" id="business-middle-name"
-                                placeholder="Enter your middle name">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="business-last-name">Last Name <span class="required">*</span></label>
-                            <input type="text" style="padding: 4px" id="business-last-name" required
-                                placeholder="Enter your last name">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="business-email">Email Address <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path
-                                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                                </svg>
-                                <input type="email" id="business-email" required
-                                    placeholder="Enter your business email">
-                            </div>
-                            <div id="business-email-error" class="error-message"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="business-phone">Mobile Number <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path
-                                        d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
-                                </svg>
-                                <input type="tel" id="business-phone" required placeholder="Enter your mobile number">
-                            </div>
-                            <div id="business-phone-error" class="error-message"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="business-name">Business Name <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path
-                                        d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
-                                </svg>
-                                <input type="text" id="business-name" required placeholder="Enter your business name"
-                                    minlength="5" maxlength="50">
-                            </div>
-                            <div class="error-message" id="business-name-error">Business name must be between 5 and 50
-                                characters</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="business-password">Password <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path
-                                        d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
-                                </svg>
-                                <input type="password" id="business-password" required placeholder="Create a password"
-                                    minlength="8">
-                                <i class='bx bx-hide password-toggle-icon'
-                                    onclick="togglePassword('business-password', this)"></i>
-                            </div>
-                            <div class="error-message" id="business-password-error"></div>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between;">
-                        <button type="button" class="back-button" onclick="backToAccountType()">
-                            <i class='bx bx-chevron-left'></i> Back
-                        </button>
-
-                        <button type="submit" class="primary-button" id="business-submit" disabled>Continue</button>
-                    </div>
-                </form>
-
-                <!-- Login Form -->
-                <form id="login-form" class="signup-form" style="display: none;">
-                    <h2>Login to Your Account</h2>
-
-                    <div class="form-group">
-                        <label for="login-email">Email Address <span class="required">*</span></label>
-                        <div class="input-wrapper">
-                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                fill="currentColor">
-                                <path
-                                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                            </svg>
-                            <input type="email" id="login-email" required placeholder="Enter your email address">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="login-password">Password <span class="required">*</span></label>
-                        <div class="input-wrapper">
-                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                fill="currentColor">
-                                <path
-                                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
-                            </svg>
-                            <input type="password" id="login-password" required placeholder="Enter your password">
-                            <i class='bx bx-hide password-toggle-icon'
-                                onclick="togglePassword('login-password', this)"></i>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <input type="checkbox" id="remember-me">
-                            <label for="remember-me" style="margin-left: 5px;">Remember me</label>
-                        </div>
-                        <a href="/forgot-password" style="font-size: 0.9rem; color: var(--primary);">Forgot
-                            password?</a>
-                    </div>
-
-                    <button type="submit" class="primary-button" style="width: 100%; margin-top: 20px; ">Login</button>
-                </form>
-
                 <!-- Add this footer section below the button -->
                 <div class="card-footer">
                     <div class="footer-left" style="display: flex; align-items: center;">
                         <p>Already have an account?</p>
                         <a href="#" class="footer-link" style="color: var(--primary); margin-left: 5px;"
                             onclick="showLogin()">Login</a>
-                    </div>
-                    <div class="footer-right">
-                        <a href="#" class="footer-link" id="terms-link">Terms & Conditions</a>
                     </div>
                 </div>
             </div>
@@ -1005,7 +962,6 @@
                 'personal-last-name',
                 'personal-email',
                 'personal-phone',
-                'personal-password',
             ];
 
             // Business form validation
@@ -1015,7 +971,6 @@
                 'business-last-name',
                 'business-email',
                 'business-phone',
-                'business-password',
             ];
 
             // Validate business name length
@@ -1073,21 +1028,6 @@
                 if (businessNameFieldId && businessNameErrorId) {
                     const isBusinessNameValid = validateBusinessName(businessNameFieldId, businessNameErrorId);
                     if (!isBusinessNameValid) {
-                        allValid = false;
-                    }
-                }
-
-                // Validate password if it's a required field
-                if (requiredFields.includes('personal-password')) {
-                    const passwordValid = validatePassword(document.getElementById('personal-password').value);
-                    if (!passwordValid) {
-                        allValid = false;
-                    }
-                }
-
-                if (requiredFields.includes('business-password')) {
-                    const passwordValid = validatePassword(document.getElementById('business-password').value);
-                    if (!passwordValid) {
                         allValid = false;
                     }
                 }
@@ -1156,7 +1096,6 @@
                     lastName: document.getElementById('personal-last-name').value.trim(),
                     emailId: document.getElementById('personal-email').value.trim(),
                     mobileNumber: document.getElementById('personal-phone').value.trim(),
-                    password: document.getElementById('personal-password').value,
                     isEmailActivationRequired: true,
                 };
 
@@ -1199,7 +1138,6 @@
                         lastName: document.getElementById('business-last-name').value.trim(),
                         emailId: document.getElementById('business-email').value.trim(),
                         mobileNumber: document.getElementById('business-phone').value.trim(),
-                        // password: document.getElementById('business-password').value.trim(),
                     },
                     businessName: document.getElementById('business-name').value.trim(),
                 };
@@ -1370,41 +1308,12 @@
             }
         }
 
-        function togglePassword(inputId, icon) {
-            const input = document.getElementById(inputId);
-
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('bx-hide');
-                icon.classList.add('bx-show');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('bx-show');
-                icon.classList.add('bx-hide');
-            }
-        }
-
-        // Add this to your existing JavaScript
-        function validatePassword(password) {
-            // At least 8 characters, contains at least one letter and one number
-            const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-            return regex.test(password);
-        }
-
-        function checkPasswordMatch(passwordId, confirmPasswordId) {
-            const password = document.getElementById(passwordId).value;
-            const confirmPassword = document.getElementById(confirmPasswordId).value;
-            return password === confirmPassword;
-        }
-
         function updateSubmitButton() {
             // For personal form
-            const personalPassword = document.getElementById('personal-password')?.value;
             const personalSubmit = document.getElementById('personal-submit');
 
             const personalValid = validatePassword(personalPassword)
             // For business form
-            const businessPassword = document.getElementById('business-password').value;
             const businessSubmit = document.getElementById('business-submit');
 
             const businessValid = validatePassword(businessPassword)
@@ -1414,58 +1323,6 @@
             }
             if (businessSubmit) {
                 businessSubmit.disabled = !businessValid;
-            }
-        }
-
-        // Add event listeners for password fields
-        document.addEventListener('DOMContentLoaded', function () {
-            // Personal form password fields
-            document.getElementById('personal-password')?.addEventListener('input', function () {
-                validatePasswordField('personal-password');
-                updateSubmitButton();
-            });
-
-            document.getElementById('personal-confirm-password')?.addEventListener('input', function () {
-                validatePasswordMatch('personal-password', 'personal-confirm-password');
-                updateSubmitButton();
-            });
-
-            // Business form password fields
-            document.getElementById('business-password')?.addEventListener('input', function () {
-                validatePasswordField('business-password');
-                updateSubmitButton();
-            });
-
-            document.getElementById('business-confirm-password')?.addEventListener('input', function () {
-                validatePasswordMatch('business-password', 'business-confirm-password');
-                updateSubmitButton();
-            });
-        });
-
-        function validatePasswordField(fieldId) {
-            const field = document.getElementById(fieldId);
-            const isValid = validatePassword(field.value);
-
-            if (field.value && !isValid) {
-                field.classList.add('invalid');
-                showError(fieldId, 'Password must be at least 8 characters with at least one letter and one number');
-            } else {
-                field.classList.remove('invalid');
-                hideError(fieldId);
-            }
-        }
-
-        function validatePasswordMatch(passwordId, confirmPasswordId) {
-            const passwordField = document.getElementById(passwordId);
-            const confirmField = document.getElementById(confirmPasswordId);
-            const isMatch = checkPasswordMatch(passwordId, confirmPasswordId);
-
-            if (confirmField.value && !isMatch) {
-                confirmField.classList.add('invalid');
-                showError(confirmPasswordId, 'Passwords do not match');
-            } else {
-                confirmField.classList.remove('invalid');
-                hideError(confirmPasswordId);
             }
         }
 
@@ -1503,82 +1360,6 @@
             document.getElementById('account-type-container').style.display = 'none';
             document.getElementById('personal-form').style.display = 'none';
             document.getElementById('business-form').style.display = 'none';
-
-            // Show login form
-            document.getElementById('login-form').style.display = 'block';
-
-            // Update footer to show signup link instead
-            document.querySelector('.footer-left').innerHTML = `
-        <p>Don't have an account?</p>
-        <a href="#" class="footer-link" style="color: var(--primary); margin-left: 5px;" onclick="showSignup()">Sign up</a>
-    `;
-        }
-
-        function showSignup() {
-            // Hide login form
-            document.getElementById('login-form').style.display = 'none';
-
-            // Show initial signup content
-            document.getElementById('initial-content').style.display = 'block';
-
-            // Reset footer to show login link
-            document.querySelector('.footer-left').innerHTML = `
-        <p>Already have an account?</p>
-        <a href="#" class="footer-link" style="color: var(--primary); margin-left: 5px;" onclick="showLogin()">Login</a>
-    `;
-        }
-
-        // Add to your setupFormValidation function
-        const loginForm = document.getElementById('login-form');
-        if (loginForm) {
-            loginForm.addEventListener('submit', async function (e) {
-                e.preventDefault();
-
-                const email = document.getElementById('login-email').value.trim();
-                const password = document.getElementById('login-password').value;
-                const rememberMe = document.getElementById('remember-me').checked;
-
-                if (!email || !password) {
-                    alert('Please fill in all required fields');
-                    return;
-                }
-
-                try {
-                    // Disable button during submission
-                    const submitButton = this.querySelector('button[type="submit"]');
-                    submitButton.disabled = true;
-                    submitButton.textContent = 'Logging in...';
-
-                    // Call your login API
-                    const response = await fetch('/api/login', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            email,
-                            password,
-                            rememberMe
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        // Successful login - redirect or update UI
-                        window.location.href = '/dashboard';
-                    } else {
-                        alert(data.message || 'Login failed');
-                    }
-                } catch (error) {
-                    console.error('Login error:', error);
-                    alert('An error occurred during login');
-                } finally {
-                    const submitButton = this.querySelector('button[type="submit"]');
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Login';
-                }
-            });
         }
     </script>
 </body>
