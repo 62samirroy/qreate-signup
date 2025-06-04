@@ -1041,10 +1041,10 @@
                 }
 
                 // Basic phone validation - adjust based on your requirements
-                if (!/^[0-9]{10,15}$/.test(phone)) {
+                if (!/^[0-9]{7,15}$/.test(phone)) {
                     if (touchedFields.has(fieldId)) {
                         field.classList.add('invalid');
-                        showError(fieldId, 'Please enter a valid phone number (10-15 digits)');
+                        showError(fieldId, 'Please enter a valid phone number (7-15 digits)');
                     } else {
                         hideError(fieldId);
                         field.classList.remove('invalid');
